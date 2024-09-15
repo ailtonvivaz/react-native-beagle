@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
-}
+export { Beagle } from './Beagle';
+export { BeagleProvider, useBeagle } from './contexts';
+export { ErrorLog, MessageLog } from './plugins';
+export { BeagleLog, BeagleLogPlugin } from './types';

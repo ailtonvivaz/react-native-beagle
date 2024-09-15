@@ -1,30 +1,36 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-beagle';
+import * as Clipboard from 'expo-clipboard';
+import { useEffect } from 'react';
+import { StyleSheet, useColorScheme, View } from 'react-native';
+import { Beagle, BeagleProvider, MessageLog } from 'react-native-beagle';
+import { AnalyticsLogPlugin } from './plugins/Analytics/AnalyticsLogPlugin';
+import { HomeScreen } from './screens/HomeScreen';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
+  const theme = useColorScheme();
 
   useEffect(() => {
-    multiply(3, 7).then(setResult);
+    Beagle.log(new MessageLog('App loaded', 'info'));
   }, []);
 
+  useEffect(() => {
+    Beagle.registerPlugin(new AnalyticsLogPlugin());
+  }, []);
+
+  const copy = async (value: string) => {
+    await Clipboard.setStringAsync(value);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <BeagleProvider theme={theme ?? 'light'} copy={copy}>
+      <View style={styles.root}>
+        <HomeScreen />
+      </View>
+    </BeagleProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
   },
 });
