@@ -14,6 +14,7 @@ export class ErrorLogPlugin extends BeagleLogPlugin<ErrorLog> {
   provideDetailContent({ error, message }: ErrorLog): DetailContent {
     if (!(error instanceof Error)) {
       return {
+        key: 'error',
         kind: 'list',
         children: [
           {
@@ -26,12 +27,11 @@ export class ErrorLogPlugin extends BeagleLogPlugin<ErrorLog> {
     }
 
     const listItems: Content[] = [
-      { kind: 'label', label: 'Name', value: error.name, selectable: true },
+      { kind: 'label', label: 'Name', value: error.name },
       {
         kind: 'label',
         label: 'Message',
         value: error.message,
-        selectable: true,
       },
     ];
 
@@ -61,6 +61,7 @@ export class ErrorLogPlugin extends BeagleLogPlugin<ErrorLog> {
     }
 
     return {
+      key: 'error',
       kind: 'list',
       children: listItems,
     };

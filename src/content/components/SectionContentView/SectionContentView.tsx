@@ -8,12 +8,12 @@ interface SectionContentViewProps {
 }
 
 export const SectionContentView: React.FC<SectionContentViewProps> = ({
-  content: { title, expanded = false, children: content },
+  content: { key, title, expanded = false, children: content },
 }) => {
   return (
-    <AccordionItem title={title} expanded={expanded}>
+    <AccordionItem title={title} expanded={expanded} key={key}>
       {content.map((sectionContent, index) => (
-        <View key={`${title}_${index}`}>
+        <View key={`${key}_${index}`}>
           <ContentView content={sectionContent} />
         </View>
       ))}

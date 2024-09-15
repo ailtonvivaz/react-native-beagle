@@ -39,6 +39,7 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
     }
 
     return {
+      key: 'footer',
       kind: 'box',
       direction: 'row',
       justifyContent: 'space-between',
@@ -71,6 +72,7 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
     response,
   }: NetworkingLog): ListContent {
     return {
+      key: 'info',
       kind: 'list',
       children: [
         { kind: 'label', label: 'URL', value: request.url },
@@ -93,8 +95,12 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
     };
   }
 
-  private provideHeadersContent(headers?: NetworkingHeaders): SectionContent {
+  private provideHeadersContent(
+    headers: NetworkingHeaders | undefined,
+    suffix: string
+  ): SectionContent {
     return {
+      key: `${suffix}_headers`,
       kind: 'section',
       title: 'Headers',
       children: headers
@@ -103,7 +109,13 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
             label: key,
             value,
           }))
-        : [{ kind: 'text', text: 'No headers', variant: 'caption' }],
+        : [
+            {
+              kind: 'text',
+              text: 'No headers',
+              variant: 'caption',
+            },
+          ],
     };
   }
 
@@ -122,7 +134,9 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
         variant: 'caption',
       };
     }
+
     return {
+      key: 'body',
       kind: 'section',
       title: 'Body',
       expanded: true,
@@ -132,9 +146,10 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
 
   private provideRequestContent(request: NetworkingRequest): ListContent {
     return {
+      key: 'request',
       kind: 'list',
       children: [
-        this.provideHeadersContent(request.headers),
+        this.provideHeadersContent(request.headers, 'request'),
         this.provideBodyContent(request.body, true),
       ],
     };
@@ -142,11 +157,12 @@ export class NetworkingLogPlugin extends BeagleLogPlugin<NetworkingLog> {
 
   private provideResponseContent(response?: NetworkingResponse): ListContent {
     return {
+      key: 'response',
       kind: 'list',
       children: response
         ? response.kind === 'data'
           ? [
-              this.provideHeadersContent(response.headers),
+              this.provideHeadersContent(response.headers, 'response'),
               this.provideBodyContent(response.body),
             ]
           : [

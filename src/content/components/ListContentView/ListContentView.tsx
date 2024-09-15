@@ -9,8 +9,7 @@ interface ListContentViewProps {
 }
 
 export const ListContentView: React.FC<ListContentViewProps> = ({
-  content,
-  suffixKey,
+  content: { key, children },
 }) => {
   const renderItem = (item: Content | SectionContent) => {
     if (item.kind === 'section') {
@@ -21,10 +20,11 @@ export const ListContentView: React.FC<ListContentViewProps> = ({
   return (
     <SafeAreaView>
       <FlatList
-        data={content.children}
+        data={children}
         renderItem={({ item }) => renderItem(item)}
-        keyExtractor={(_, index) => `${suffixKey ?? 'item'}_${index}`}
+        keyExtractor={(_, index) => `${key}_${index}`}
         contentContainerStyle={styles.container}
+        key={key}
       />
     </SafeAreaView>
   );

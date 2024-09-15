@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 
-import { nanoid } from '../../../utils/nanoid';
 import type { BoxContent } from '../../types';
 import { ContentView } from '../ContentView/ContentView';
 
@@ -9,13 +8,12 @@ interface BoxContentViewProps {
 }
 
 export const BoxContentView: React.FC<BoxContentViewProps> = ({
-  content: { children: content, direction, justifyContent },
+  content: { key, children: content, direction, justifyContent },
 }) => {
-  const randomKey = nanoid();
   return (
-    <View style={{ flexDirection: direction, justifyContent }}>
+    <View style={{ flexDirection: direction, justifyContent }} key={key}>
       {content.map((child, index) => (
-        <ContentView content={child} key={`${randomKey}_${index}`} />
+        <ContentView content={child} key={`${key}_${index}`} />
       ))}
     </View>
   );

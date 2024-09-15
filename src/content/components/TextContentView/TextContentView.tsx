@@ -6,10 +6,15 @@ interface TextContentViewProps {
 }
 
 export const TextContentView: React.FC<TextContentViewProps> = ({
-  content: { text, variant, bold, selectable },
+  content: { text, variant, bold, selectable, lines },
 }) => {
   return (
-    <Typography variant={variant} bold={bold} selectable={selectable}>
+    <Typography
+      variant={variant}
+      bold={bold}
+      selectable={selectable}
+      numberOfLines={lines}
+    >
       {text}
     </Typography>
   );

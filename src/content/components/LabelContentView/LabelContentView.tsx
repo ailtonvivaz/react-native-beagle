@@ -6,10 +6,10 @@ interface LabelContentViewProps {
 }
 
 export const LabelContentView: React.FC<LabelContentViewProps> = ({
-  content: { label, value, selectable },
+  content: { label, value },
 }) => {
   return (
-    <Typography variant="body" bold selectable={selectable}>
+    <Typography variant="body" bold selectable>
       {label}
       {': '}
       <Typography bold={false}>{value}</Typography>

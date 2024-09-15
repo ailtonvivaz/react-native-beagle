@@ -1,11 +1,16 @@
 import type { TypographyVariant } from '../components/Typography/Typography';
 
+interface KeyedContent {
+  key: string;
+}
+
 export interface TextContent {
   kind: 'text';
   text: string;
   variant?: TypographyVariant;
   bold?: boolean;
   selectable?: boolean;
+  lines?: number;
 }
 
 export interface JsonContent {
@@ -18,10 +23,9 @@ export interface LabelContent {
   kind: 'label';
   label: string;
   value: string;
-  selectable?: boolean;
 }
 
-export interface SectionContent {
+export interface SectionContent extends KeyedContent {
   kind: 'section';
   title: string;
   expanded?: boolean;
@@ -34,7 +38,7 @@ export interface LoadingContent {
   size?: number;
 }
 
-export interface BoxContent {
+export interface BoxContent extends KeyedContent {
   kind: 'box';
   direction?: 'row' | 'column';
   justifyContent?:
@@ -48,9 +52,7 @@ export interface BoxContent {
 
 export type Content = TextContent | JsonContent | LabelContent | LoadingContent;
 
-export type ChildrenContent = Content[];
-
-export interface ListContent {
+export interface ListContent extends KeyedContent {
   kind: 'list';
   children: (Content | SectionContent)[];
 }

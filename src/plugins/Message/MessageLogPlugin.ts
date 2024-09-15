@@ -13,6 +13,7 @@ export class MessageLogPlugin extends BeagleLogPlugin<MessageLog> {
 
   provideDetailContent(log: BeagleLog): DetailContent {
     return {
+      key: 'message',
       kind: 'list',
       children: [
         {
