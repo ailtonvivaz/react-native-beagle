@@ -1,4 +1,10 @@
-# react-native-beagle
+<p align="center">
+  <img src="./doc/images/logo.png" alt="logo" width="15%"/>
+</p>
+
+<h1 align="center">
+  Beagle
+</h1>
 
 Beagle is an in-app tool for React Native that helps QA sniff logs, network activity, and errors, with support for custom plugins.
 
@@ -10,13 +16,34 @@ npm install react-native-beagle
 
 ## Usage
 
+1. First, you need to wrap your app with the `BeagleProvider` component. This component will provide the context for the Beagle tool to work.
 
-```js
-import { multiply } from 'react-native-beagle';
+```ts
+import { BeagleProvider } from 'react-native-beagle';
 
-// ...
+const App = () => {
+  return (
+    <BeagleProvider>
+      // Your app code
+    </BeagleProvider>
+  );
+};
 
-const result = await multiply(3, 7);
+export default App;
+```
+
+2. Then, you can use the `useBeagle` hook to access the Beagle tool.
+
+```ts
+import { useBeagle } from 'react-native-beagle';
+
+const MyComponent = () => {
+  const { showInspector } = useBeagle();
+
+  return (
+    <Button onPress={() => useBeagle()} title="Open Beagle" />
+  );
+};
 ```
 
 
