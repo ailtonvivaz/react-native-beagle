@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { LogHeaderInfo } from '../components/LogHeaderInfo/LogHeaderInfo';
+import { Timestamp } from '../components/Timestamp/Timestamp';
 import { Typography } from '../components/Typography/Typography';
 import { BoxOrContentView } from '../content/components/BoxContentView/BoxOrContentView';
 import { useLog } from '../contexts/LogContext/useLog';
@@ -17,7 +18,8 @@ export const LogCard = () => {
 
   return (
     <View style={styles.card}>
-      <LogHeaderInfo log={log} />
+      <LogHeaderInfo />
+      <Timestamp time={log.time} />
       <View style={styles.content}>
         <Typography numberOfLines={2}>{log.message}</Typography>
       </View>

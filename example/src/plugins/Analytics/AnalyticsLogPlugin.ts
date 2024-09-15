@@ -1,6 +1,8 @@
-import type { BeagleLog } from 'react-native-beagle';
-import type { DetailContent } from '../../../../src/content/types';
-import { BeagleLogPlugin } from '../../../../src/types/LogPlugin';
+import {
+  BeagleLogPlugin,
+  type BeagleLog,
+  type DetailContent,
+} from 'react-native-beagle';
 import { AnalyticsLog } from './types';
 
 export class AnalyticsLogPlugin extends BeagleLogPlugin<AnalyticsLog> {
@@ -12,6 +14,7 @@ export class AnalyticsLogPlugin extends BeagleLogPlugin<AnalyticsLog> {
 
   provideDetailContent(log: AnalyticsLog): DetailContent {
     return {
+      key: 'analytics',
       kind: 'list',
       children: [
         {

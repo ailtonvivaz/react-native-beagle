@@ -40,7 +40,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
 
   const rotate = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '90deg'],
+    outputRange: ['0deg', '180deg'],
   });
 
   return (
@@ -48,7 +48,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       <TouchableOpacity onPress={toggle}>
         <View style={styles.titleContainer}>
           <Animated.View style={{ transform: [{ rotate }] }}>
-            <Icon icon="forward" />
+            <Icon icon="arrow-down" size="medium" />
           </Animated.View>
           <Typography variant="title">{title}</Typography>
         </View>

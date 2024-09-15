@@ -15,12 +15,16 @@ import { Icon } from '../Icon/Icon';
 import { Typography } from '../Typography/Typography';
 import type { HeaderProps } from './types';
 
-export const Header: React.FC<HeaderProps> = ({ title, onClosePress }) => {
+export const Header: React.FC<HeaderProps> = ({
+  title,
+  onClosePress,
+  children,
+}) => {
   const { mode } = useTheme();
   const styles = useThemedStyles(themedStyles);
 
   return (
-    <View style={styles.header}>
+    <>
       <StatusBar
         barStyle={
           mode === 'dark' || Platform.OS === 'ios'
@@ -28,23 +32,30 @@ export const Header: React.FC<HeaderProps> = ({ title, onClosePress }) => {
             : 'dark-content'
         }
       />
-      <SafeAreaView>
-        <View style={styles.container}>
-          <Typography variant="headline" numberOfLines={1} style={styles.title}>
-            {title}
-          </Typography>
-          <Pressable onPress={onClosePress} style={styles.action}>
-            {true && <Icon icon="close" />}
-          </Pressable>
-        </View>
-      </SafeAreaView>
-    </View>
+      <View style={styles.root}>
+        <SafeAreaView>
+          <View style={styles.container}>
+            <Typography
+              variant="headline"
+              numberOfLines={1}
+              style={styles.title}
+            >
+              {title}
+            </Typography>
+            <Pressable onPress={onClosePress} style={styles.action}>
+              {true && <Icon icon="close" />}
+            </Pressable>
+          </View>
+          {children && <View style={styles.children}>{children}</View>}
+        </SafeAreaView>
+      </View>
+    </>
   );
 };
 
 const themedStyles = (theme: BaseTheme) =>
   StyleSheet.create({
-    header: {
+    root: {
       backgroundColor: theme.colors.header,
       paddingHorizontal: 16,
       paddingVertical: 8,
@@ -71,5 +82,8 @@ const themedStyles = (theme: BaseTheme) =>
       padding: 8,
       backgroundColor: theme.colors.search.background,
       borderRadius: 20,
+    },
+    children: {
+      paddingVertical: 8,
     },
   });

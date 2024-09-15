@@ -1,18 +1,13 @@
-import { StyleSheet, View, type ViewProps } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import type { BeagleLog } from '../../types';
+import { useLog } from '../../contexts/LogContext/useLog';
 import { Loading } from '../Loading/Loading';
 import { Tag } from '../Tag/Tag';
-import { Timestamp } from '../Timestamp/Timestamp';
+import { Typography } from '../Typography/Typography';
 
-interface LogHeaderInfoProps extends ViewProps {
-  log: BeagleLog;
-}
+export const LogHeaderInfo = () => {
+  const { log, plugin } = useLog();
 
-export const LogHeaderInfo: React.FC<LogHeaderInfoProps> = ({
-  log,
-  ...props
-}) => {
   const renderTag = () => {
     switch (log.level) {
       case 'loading':
@@ -29,16 +24,15 @@ export const LogHeaderInfo: React.FC<LogHeaderInfoProps> = ({
   };
 
   return (
-    <View style={styles.header} {...props}>
-      {/* <Typography variant="caption">{plugin.name}</Typography> */}
-      <Timestamp time={log.time} />
+    <View style={styles.root}>
+      <Typography variant="caption">{plugin.name}</Typography>
       {renderTag()}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
+  root: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

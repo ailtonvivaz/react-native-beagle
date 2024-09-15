@@ -2,22 +2,31 @@ import { BeagleLog, type LogLevel } from '../../types';
 import type { NetworkingRequest, NetworkingResponse } from './types';
 
 export class NetworkingLog extends BeagleLog {
-  url: URL;
+  url: string;
+  host: string;
   request: NetworkingRequest;
   response?: NetworkingResponse;
-
-  get host(): string {
-    return this.url.host;
-  }
 
   constructor(
     request: NetworkingRequest,
     response?: NetworkingResponse,
     id?: string
   ) {
-    const url = new URL(request.url);
+    const url = request.url;
 
-    const message = `${request.method} ${url.pathname}${url.search}`;
+    let host = '';
+    let path = '';
+
+    // eslint-disable-next-line no-useless-escape
+    const pattern = /^(?:https?:\/\/)([^\/]+)(.*)?$/;
+    const match = url.match(pattern);
+
+    if (match) {
+      host = match[1] || '';
+      path = match[2] || '';
+    }
+
+    const message = `${request.method} ${path}`;
 
     if (response) {
       const level: LogLevel = (() => {
@@ -36,6 +45,7 @@ export class NetworkingLog extends BeagleLog {
     }
 
     this.url = url;
+    this.host = host;
     this.request = request;
     this.response = response;
   }

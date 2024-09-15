@@ -4,7 +4,7 @@ import { BottomBar } from '../components/BottomBar/BottomBar';
 import { Header } from '../components/Header/Header';
 import { Icon } from '../components/Icon/Icon';
 import { LogHeaderInfo } from '../components/LogHeaderInfo/LogHeaderInfo';
-import { Typography } from '../components/Typography/Typography';
+import { Timestamp } from '../components/Timestamp/Timestamp';
 import { DetailContentView } from '../content/components/DetailContentView/DetailContentView';
 import { useLog } from '../contexts/LogContext/useLog';
 import { useThemedStyles, type BaseTheme } from '../contexts/ThemeContext';
@@ -36,15 +36,16 @@ export const LogModal: React.FC<LogModalProps> = ({ onRequestClose }) => {
       presentationStyle="formSheet"
       style={styles.root}
     >
-      <Header title={log.message} onClosePress={onRequestClose} />
-      <LogHeaderInfo log={log} style={styles.header} />
+      <Header title={log.message} onClosePress={onRequestClose}>
+        <LogHeaderInfo />
+      </Header>
 
       <View style={styles.container}>
         <DetailContentView content={content} />
       </View>
 
       <BottomBar justifyContent="space-between">
-        <Typography variant="caption">{plugin.name}</Typography>
+        <Timestamp time={log.time} dateStyle="medium" timeStyle="long" />
         <TouchableOpacity onPress={onSharePress}>
           <Icon icon="share" size="medium" />
         </TouchableOpacity>
@@ -59,9 +60,6 @@ const themedStyles = (theme: BaseTheme) =>
       flex: 1,
     },
     header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
       backgroundColor: theme.colors.header,
       paddingHorizontal: 16,
       paddingTop: 8,

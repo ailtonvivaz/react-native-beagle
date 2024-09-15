@@ -1,4 +1,4 @@
-import type { Content, DetailContent } from '../../content/types';
+import type { BoxContent, Content, DetailContent } from '../../content/types';
 import type { BeagleLog } from '../../types';
 import { BeagleLogPlugin } from '../../types/LogPlugin';
 
@@ -64,6 +64,19 @@ export class ErrorLogPlugin extends BeagleLogPlugin<ErrorLog> {
       key: 'error',
       kind: 'list',
       children: listItems,
+    };
+  }
+
+  provideCardFooter(log: ErrorLog): Content | BoxContent | null {
+    if (!(log.error instanceof Error)) {
+      return null;
+    }
+
+    return {
+      kind: 'text',
+      text: log.error.stack ?? '',
+      variant: 'caption',
+      lines: 2,
     };
   }
 }

@@ -44,7 +44,7 @@ export const BeagleProviderEnabled: React.FC<BeagleProviderProps> = ({
     Beagle.registerPlugin(new ErrorLogPlugin());
   }, []);
 
-  useNetworkingPlugin(addLog);
+  useNetworkingPlugin();
 
   const showInspector = useCallback(() => {
     setInspectorOpen(true);

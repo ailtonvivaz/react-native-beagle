@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Beagle, MessageLog, useBeagle } from 'react-native-beagle';
 import { AnalyticsLog } from '../plugins/Analytics/types';
 import { request } from './request';
@@ -40,16 +40,20 @@ export const HomeScreen = () => {
   };
 
   const onSampleAnalyticsPress = () => {
-    Beagle.log(new AnalyticsLog('App Open', { test: 'test' }));
+    Beagle.log(new AnalyticsLog('select_content', { content: 'analytics' }));
     showInspector();
   };
 
   useEffect(() => {
     Beagle.log(new MessageLog('HomeScreen loaded', 'info'));
+
+    const error = new Error('showInspector');
+    Beagle.log(new MessageLog(error.stack ?? ''));
   }, []);
 
   return (
     <SafeAreaView style={styles.root}>
+      <Text style={styles.title}>Example</Text>
       <View style={styles.container}>
         <Button title="SAMPLE GET" onPress={onSampleGetPress} />
         <Button title="SAMPLE POST" onPress={onSamplePostPress} />
@@ -66,10 +70,17 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 24,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
+    gap: 16,
   },
 });
